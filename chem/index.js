@@ -130,8 +130,8 @@ const createElementQuiz = () => {
         let elementInput = document.createElement("input");
         elementInput.id = "quizElementInput" + i;
         elementInput.disabled = true;
-        elementInput.dataset.elementName = randomElement.s;
-        elementInput.dataset.elementId = chemicalElements[randomElement.s];
+        elementInput.dataset.elementName = randomElement;
+        elementInput.dataset.elementId = chemicalElements[randomElement].s;
         elementInput.onkeydown = (event) => {
             if (event.key === "Enter") {
                 document.getElementById("quizElementTimer").innerText = "0";
