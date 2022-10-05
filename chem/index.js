@@ -207,7 +207,7 @@ const createPeriodicQuiz = () => {
     periodicQuizContainer.append(elementName);
     const periodic = createTable(18, 9, periodicElementClick, (x, y) => {
         if (x == 0 && y == 0) return "";
-        return x > y ? (x >= 3 && x <= 12 ? (x >= 8 && x <= 10 ? 8 : x > 10 ? x - 10 : x) + "B" : (x >= 13 ? x - 10 : x) + "A") : y;
+        return x > romanize(y) ? (x >= 3 && x <= 12 ? romanize(x >= 8 && x <= 10 ? 8 : x > 10 ? x - 10 : x) + ".B" : romanize(x >= 13 ? x - 10 : x) + ".A") : y;
     });
     periodicQuizContainer.append(periodic);
     return periodicQuizContainer;
@@ -229,7 +229,7 @@ const createTable = (width, height, clickCallback, namingCreator) => {
     for (let y = 0; y < height; y++) {
         const row = document.createElement("tr");
         {
-            const rowNaming = document.createElement("h2");
+            const rowNaming = document.createElement("p");
             rowNaming.classList.add("periodicTableElement");
             rowNaming.innerText = namingCreator(0, y + 1);
             row.append(rowNaming);
@@ -252,3 +252,12 @@ Array.prototype.random = function () {
     return this[Math.floor(Math.random() * this.length)];
 };
 startup();
+const romanize = (num) => {
+    if (isNaN(num)) return NaN;
+    var digits = String(+num).split(""),
+        key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM", "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC", "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+        roman = "",
+        i = 3;
+    while (i--) roman = (key[+digits.pop() + i * 10] || "") + roman;
+    return Array(+digits.join("") + 1).join("M") + roman;
+};
