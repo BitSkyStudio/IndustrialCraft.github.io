@@ -274,6 +274,7 @@ const periodicElementClick = (x, y) => {
             periodicName.innerText = chosenElements[0];
             chosenElements.shift();
         } else {
+            document.getElementById("periodicHelpButton").remove();
             periodicName.innerText = "";
             const returnButton = document.createElement("button");
             returnButton.innerText = "Go back";
@@ -301,6 +302,17 @@ const createPeriodicQuiz = () => {
     const elementName = document.createElement("h1");
     elementName.id = "periodicElementName";
     periodicQuizContainer.append(elementName);
+    {
+        const helpButton = document.createElement("button");
+        helpButton.id = "periodicHelpButton";
+        helpButton.innerText = "help";
+        helpButton.onclick = () => {
+            const periodicName = document.getElementById("periodicElementName");
+            let element = chemicalElements[periodicName.innerText];
+            periodicElementClick(element.x, element.y);
+        };
+        periodicQuizContainer.appendChild(helpButton);
+    }
     const periodic = createTable(18, 9, periodicElementClick, (x, y) => {
         if (x == 0 && y == 0) return "";
         return x > y ? (x >= 3 && x <= 12 ? (x >= 8 && x <= 10 ? 8 : x > 10 ? x - 10 : x) + "B" : (x >= 13 ? x - 10 : x) + "A") : y;
